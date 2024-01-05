@@ -7,10 +7,10 @@ class Router
     private static $instance;
     public Request $request;
     protected array $routes = [];
-    public static function getInstance(Request $request): Router
+    public static function getInstance(Request $request): self
     {
         if(!self::$instance instanceof self){
-            self::$instance = new Router($request);
+            self::$instance = new self($request);
             return self::$instance;
         }
         return self::$instance;
@@ -18,10 +18,10 @@ class Router
     private function __construct(Request $request){
         $this->request = $request;
     }
-    public function get($path,$callback){
+    public function get(string $path, string $callback){
         $this->routes['get'][$path] = $callback;
     }
-    public function post($path,$callback){
+    public function post(string $path, string $callback){
         $this->routes['post'][$path] = $callback;
     }
     public function resolve(){
@@ -29,9 +29,27 @@ class Router
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
-            echo "Not found";
-            exit;
+            return "Not found";
         }
-        echo call_user_func($callback);
+        if (is_string($callback)){
+            return $this->renderView($callback);
+        }
+        return call_user_func($callback);
+    }
+    public function renderView(string $view): string
+    {
+        $layoutContent = $this->layoutContent();
+        $viewContent = $this->renderOnlyView($view);
+        return str_replace("{{content}}",$viewContent,$layoutContent);
+    }
+    protected function layoutContent() : string{
+        ob_start();
+        include_once Application::$ROOT_DIR."/views/layouts/main.php";
+        return ob_get_clean();
+    }
+    protected function renderOnlyView(string $view) : string {
+        ob_start();
+        include_once Application::$ROOT_DIR."/views/$view.php";
+        return ob_get_clean();
     }
 }

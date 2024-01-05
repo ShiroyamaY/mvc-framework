@@ -5,7 +5,7 @@ namespace app\core;
 class Request
 {
     private static $instance;
-    public static function getInstance(){
+    public static function getInstance() : self{
         if(!self::$instance instanceof self) {
             self::$instance = new Request();
         }
