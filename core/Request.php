@@ -4,7 +4,8 @@ namespace app\core;
 
 class Request
 {
-    private static $instance;
+    
+    private static ?Request $instance = null;
     public static function getInstance() : self{
         if(!self::$instance instanceof self) {
             self::$instance = new Request();
@@ -22,5 +23,28 @@ class Request
     }
     public function getMethod() : string{
         return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+    public function isGet(): bool
+    {
+        return $this->getMethod() === "get";
+    }
+    public function isPost(): bool
+    {
+        return $this->getMethod() === "post";
+    }
+    public function getBody(): array
+    {
+        $body = [];
+        if ($this->isGet()){
+            foreach ($_GET as $key => $value){
+                $body[$key] = filter_input(INPUT_GET,$key,FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        if ($this->isPost()){
+            foreach ($_GET as $key => $value){
+                $body[$key] = filter_input(INPUT_GET,$key,FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        return $body;
     }
 }
