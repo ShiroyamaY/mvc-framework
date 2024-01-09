@@ -34,6 +34,12 @@
         </div>
     </nav>
     <div class="content">
+       <?php
+       $message = \app\core\Application::$app->session->getFlash('registration');
+       if ($message){
+       echo "<div class='alert alert-info'>";
+       echo $message['value'];
+       echo "</div>"; } ?>
         <div class="container">
             {{content}}
         </div>

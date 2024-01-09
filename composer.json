@@ -11,5 +11,7 @@
             "name": "shiroyamay"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

@@ -1,7 +1,6 @@
 <?php
 
 namespace app\core;
-
 class Controller
 {
     protected string $layout = "main";

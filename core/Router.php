@@ -46,14 +46,11 @@ class Router
     }
     public function renderView(string $view,array $params = []): string
     {
-        foreach ($params as $key => $value){
-            $$key = $value;
-        }
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view,$params);
         return str_replace("{{content}}",$viewContent,$layoutContent);
     }
-    public function renderContent(string $viewContent, ) : string{
+    public function renderContent(string $viewContent) : string{
         $layoutContent = $this->layoutContent();
         return str_replace("{{content}}",$viewContent,$layoutContent);
     }
@@ -63,7 +60,7 @@ class Router
         include_once Application::$ROOT_DIR."/views/layouts/$layout.php";
         return ob_get_clean();
     }
-    protected function renderOnlyView(string $view,array $params) : string {
+    protected function renderOnlyView(string $view,array $params = []) : string {
         foreach ($params as $key => $value){
             $$key = $value;
         }
