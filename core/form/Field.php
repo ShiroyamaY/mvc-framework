@@ -39,7 +39,7 @@ class Field
             </div>
         ',
             $this->model->getLabel($this->attribute),
-        $this->type,
+        $this->attribute,
         $this->attribute,
         $this->model->{$this->attribute},
         $this->model->hasError($this->attribute) ? 'is-invalid' : '',
