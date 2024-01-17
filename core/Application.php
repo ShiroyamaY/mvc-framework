@@ -18,6 +18,7 @@ class Application
     public static Application $app;
     public Session $session;
     public ?User $user = null;
+    public string $layout = 'main';
 
     public function getController(): Controller
     {
@@ -48,7 +49,11 @@ class Application
     }
     public function run(): void
     {
-        echo $this->router->resolve();
+        try{
+            echo $this->router->resolve();
+        }catch (\Exception $e){
+            echo $this->router->renderView('_error',['exception' => $e]);
+        }
     }
     public function login(DbModel $user): bool
     {
