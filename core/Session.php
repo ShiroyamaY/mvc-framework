@@ -33,11 +33,14 @@ class Session
         ];
     }
 
-    public function getFlash($key): array
+    public function getFlash($keyArray): array
     {
-        if (isset($_SESSION[self::FLASH_KEY][$key])){
-            return $_SESSION[self::FLASH_KEY][$key];
+        foreach ($keyArray as $key){
+            if (isset($_SESSION[self::FLASH_KEY][$key])){
+                return $_SESSION[self::FLASH_KEY][$key];
+            }
         }
+
         return [];
     }
     public function __destruct()

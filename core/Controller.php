@@ -26,7 +26,7 @@ class Controller
     }
 
     public function render(string $view,array $array = []) : string{
-        return Application::$app->router->renderView($view,$array);
+        return Application::$app->view->renderView($view,$array);
     }
     public function registerMiddleware(BaseMiddleware $middleware): void
     {

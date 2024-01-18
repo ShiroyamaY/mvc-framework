@@ -1,13 +1,16 @@
 <?php
-    use app\core\Application;
-
-    ?>
+use app\core\Application;
+?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title><?php
+        /** @var $this \app\core\View */
+        echo $this->title;
+        ?>
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
@@ -52,7 +55,7 @@
     </nav>
     <div class="content">
        <?php
-       $message = \app\core\Application::$app->session->getFlash('registration');
+       $message = \app\core\Application::$app->session->getFlash(['registration','contact']);
        if ($message){
        echo "<div class='alert alert-info'>";
        echo $message['value'];

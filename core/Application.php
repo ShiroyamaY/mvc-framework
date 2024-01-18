@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\db\Database;
+use app\core\db\DbModel;
 use app\models\User;
 
 
@@ -13,6 +15,7 @@ class Application
     public Request $request;
     public Response $response;
     public ?Controller $controller = null;
+    public View $view;
     public Database $db;
 
     public static Application $app;
@@ -45,14 +48,14 @@ class Application
             $primaryKey = call_user_func([$this->userClass,'primaryKey']);
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
         }
-
+        $this->view = new View();
     }
     public function run(): void
     {
         try{
             echo $this->router->resolve();
         }catch (\Exception $e){
-            echo $this->router->renderView('_error',['exception' => $e]);
+            echo $this->view->renderView('_error',['exception' => $e]);
         }
     }
     public function login(DbModel $user): bool

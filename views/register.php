@@ -1,9 +1,12 @@
 <?php
+/** @var $this \app\core\View */
+$this->title = 'Registration';
+
 /** @var $model \app\models\User */
 ?>
 <h1>Create an account</h1>
     <?php use app\core\form\Form; ?>
-    <?php use app\core\form\Field; ?>
+    <?php use app\core\form\InputField; ?>
     <?php $form = Form::begin('',"post"); ?>
     <div class="row">
         <div class="col"><?php echo $form->field($model,'firstname'); ?></div>
